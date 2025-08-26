@@ -38,7 +38,7 @@
 					</div>
 					<!-- <a href="#" id="pull"><strong>MENU</strong></a> -->
 					<ul id="menu">
-						<li <?php $this->helpers->isActiveMenu("/"); ?>><a href="<?php echo URL ?>">HOME</a></li>
+						<li <?php $this->helpers->isActiveMenu("home"); ?>><a href="<?php echo URL ?>">HOME</a></li>
 						<li <?php $this->helpers->isActiveMenu("about"); ?>><a href="<?php echo URL ?>about#content">ABOUT US</a></li>
 						<li <?php $this->helpers->isActiveMenu("services"); ?>><a href="<?php echo URL ?>services#content">SERVICES</a></li>
 						<li <?php $this->helpers->isActiveMenu("gallery"); ?>><a href="<?php echo URL ?>gallery#content">GALLERY</a></li>
