@@ -175,35 +175,25 @@ Class Helpers {
 
 	public function seo($view){
 		$res = array();
-	
-		if (!file_exists('csvDB/seo.csv')) {
-			die("SEO CSV file not found");
-		}
-	
 		$file = fopen('csvDB/seo.csv', "r") or die("Cannot open");
-	
-		// Get headers
-		$templateArr = fgetcsv($file);
-		$index = 0;
-	
-		// Loop through rows safely
-		while (($elems = fgetcsv($file)) !== false) {
+		$templateArr =(fgetcsv($file));
+		$index=0;
+
+		while(!feof($file)){
+
 			$storageArray = array();
-	
-			for ($i = 0; $i < count($templateArr); $i++) {
-				// Avoid undefined index warning
-				$storageArray[$templateArr[$i]] = isset($elems[$i]) ? $elems[$i] : '';
+			$elems = fgetcsv($file);
+			for ($i = 0; $i <= count($templateArr)-1; $i++){
+				$storageArray[$templateArr[$i]] = $elems[$i];
 			}
-	
 			$res[$index++] = $storageArray;
 		}
-	
+
 		fclose($file);
 		$has_seo = false;
-	
-		// Output SEO meta for the given view
-		foreach ($res as $value) {
-			if ($view == $value["page_name"]) {
+
+		foreach($res as $value){
+			if($view == $value["page_name"]) {
 				echo "<title>".$value["title"]."</title>";
 				echo '<meta name="keywords" content="'.$value["keywords"].'">';
 				echo '<meta name="description" content="'.$value["description"].'">';
@@ -211,15 +201,13 @@ Class Helpers {
 				break;
 			}
 		}
-	
-		// Fallback to first row if no matching page
-		if ($has_seo == false && !empty($res)) {
+
+		if($has_seo == false){
 			echo "<title>".$res[0]["title"]."</title>";
 			echo '<meta name="keywords" content="'.$res[0]["keywords"].'">';
 			echo '<meta name="description" content="'.$res[0]["description"].'">';
 		}
 	}
-	
 
 	public function analytics(){
 		if($this->siteInfo['ga_tracking_id'] != ''){
